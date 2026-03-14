@@ -120,6 +120,10 @@
      box-shadow: 0 0 10px var(--accent);
  }
 
+ .navbar-toggler {
+     background-color: var(--accent);
+ }
+
  /* --- Game Cards --- */
  .game-card {
      background: var(--bg-card);
