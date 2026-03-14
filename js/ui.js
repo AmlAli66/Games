@@ -1,46 +1,57 @@
-export class Ui {
-    displayGameData(data) {
-        const gameData = document.querySelector("#gameData");
-        let box = ``;
-        for (let i = 0; i < data.length; i++) {
-            box += `
-                            <div class="col-xl-3 col-lg-4 col-md-6  ">
-                    <div class="card bg-transparent text-light h-100"  data-id="${data[i].id}" role="button">
-                        <div class="card-body p-3">
-                            <img src="${data[i].thumbnail}" class="card-img-top mb-3 img-overlay" alt="...">
-                            <div class="d-flex justify-content-between align-items-center ">
-                                <h5 class="card-title small" >${data[i].title}</h5>
-                                <a href="#" class="btn free-btn px-2 py-1 btn-primary">Free</a>
+// --- UI Class ---
+export class UI {
+    displayGames(data) {
+        const grid = document.getElementById('gameGrid');
+        let html = '';
+        data.forEach(game => {
+            html += `
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="game-card" data-id="${game.id}">
+                            <div class="card-img-wrapper">
+                                <img src="${game.thumbnail}" class="w-100" alt="${game.title}">
                             </div>
-                            <p class="card-text opacity-50 small text-center">${data[i].short_description.split(" ", 8)}</p>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="game-title mb-0">${game.title}</h5>
+                                    <span class="price-tag">FREE</span>
+                                </div>
+                                <p class="game-desc">${game.short_description}</p>
+                                <div class="mt-3 pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between">
+                                    <span class="badge-custom">${game.genre}</span>
+                                    <span class="badge-custom">${game.platform}</span>
+                                </div>
+                            </div>
                         </div>
-                        <footer class="card-footer small hstack justify-content-between">
-                            <span class="badge text-bg-secondary bg-opacity-25 ">${data[i].genre}</span>
-                            <span class="badge text-bg-secondary bg-opacity-25">${data[i].platform}</span>
-                        </footer>
-                    </div>
-                </div>
-            `
-        }
-        gameData.innerHTML = box;
+                    </div>`;
+        });
+        grid.innerHTML = html;
+        this.attachListeners();
     }
 
-    displayGameDetails(data) {
-        const gameDetails = document.querySelector("#gDetails");
-        let box = `
-                        <div class="col-md-4">
-                    <img src="${data.thumbnail}" class="w-100" alt="">
-                </div>
+    displayDetails(game) {
+        const container = document.getElementById('detailsContent');
+        container.innerHTML = `
+                    <div class="col-lg-5">
+                        <img src="${game.thumbnail}" class="w-100 detail-img mb-4" alt="">
+                    </div>
+                    <div class="col-lg-7">
+                        <h1 class="display-4 mb-2">${game.title}</h1>
+                        <div class="d-flex gap-2 mb-4">
+                            <span class="badge-custom">${game.genre}</span>
+                            <span class="badge-custom">${game.platform}</span>
+                            <span class="badge-custom text-info">${game.status}</span>
+                        </div>
+                        <p class="lead text-muted mb-5" style="font-size: 1.1rem; line-height: 1.8;">
+                            ${game.description}
+                        </p>
+                        <a href="${game.game_url}" target="_blank" class="btn btn-action">PLAY FOR FREE</a>
+                    </div>
+                `;
+    }
 
-                <div class="col-md-8">
-                    <h3 class="mb-3">Title: ${data.title}</h3>
-                    <p>Category: <span class="badge text-bg-info"> ${data.genre}</span> </p>
-                    <p>Platform: <span class="badge text-bg-info"> ${data.platform}</span> </p>
-                    <p>Status: <span class="badge text-bg-info"> ${data.status}</span> </p>
-                    <p class="small">${data.description}</p>
-                    <a class="btn btn-outline-warning text-white" target="_blank" href="${data.game_url}">Show Game</a>
-                </div>
-        `;
-        gameDetails.innerHTML = box;
+    attachListeners() {
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.onclick = () => window.app.loadDetails(card.dataset.id);
+        });
     }
 }
