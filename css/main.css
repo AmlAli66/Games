@@ -1,7 +1,7 @@
  :root {
      --bg-dark: #0a0b10;
      --bg-card: #161b22;
-     --accent: #7c4dff;
+     --accent: #c9baf2;
      --accent-glow: rgba(124, 77, 255, 0.3);
      --text-primary: #ffffff;
      --text-muted: #8b949e;
@@ -78,9 +78,19 @@
  .navbar-brand {
      font-size: 1.5rem;
      letter-spacing: -1px;
+     background: linear-gradient(45deg, #fff, #c9baf2);
+     margin-end: 2px;
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+
+
+ }
+
+ .navbar-brand .logo {
      background: linear-gradient(45deg, #fff, var(--accent));
      -webkit-background-clip: text;
      -webkit-text-fill-color: transparent;
+
  }
 
  .nav-link {
